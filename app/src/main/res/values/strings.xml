@@ -1,3 +1,15 @@
 <resources>
-    <string name="app_name">ArtSpace</string>
+    <string name="app_name">Art Space</string>
+    <string name="previous">Назад</string>
+    <string name="next">Далее</string>
+    <string name="mountain_lake">Горное озеро</string>
+    <string name="sunset_sea">Закат над морем</string>
+    <string name="forest_path">Лесная тропа</string>
+    <string name="artwork_artist">Студия Art Space</string>
+    <string name="artwork_year">2026</string>
+    <string name="artist_and_year">%1$s (%2$s)</string>
+    <string name="artwork_position">Работа %1$d из %2$d</string>
+    <string name="mountain_lake_description">Снежные горные вершины отражаются в бирюзовом озере, на берегу растут ели.</string>
+    <string name="sunset_sea_description">Золотое солнце садится над морем, по розовым волнам плывёт маленькая парусная лодка.</string>
+    <string name="forest_path_description">Извилистая светлая тропа ведёт между зелёными деревьями к солнечной поляне.</string>
 </resources>
