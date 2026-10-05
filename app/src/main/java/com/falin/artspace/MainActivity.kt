@@ -60,15 +60,19 @@ private val artworks = listOf(
 
 @Composable
 fun ArtSpaceScreen(modifier: Modifier = Modifier) {
-    val artwork = artworks[0]
+    // One state changes the image and all its information together.
+    var currentIndex by rememberSaveable { mutableIntStateOf(0) }
+    val artwork = artworks[currentIndex]
+    val previous = { currentIndex = (currentIndex + artworks.size - 1) % artworks.size }
+    val next = { currentIndex = (currentIndex + 1) % artworks.size }
     Column(
         modifier = modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(24.dp, Alignment.CenterVertically)
     ) {
         ArtworkWall(artwork, Modifier.widthIn(max = 480.dp).fillMaxWidth(), 360.dp)
-        ArtworkDescriptor(artwork, 0, Modifier.widthIn(max = 480.dp))
-        DisplayController({}, {}, Modifier.widthIn(max = 480.dp))
+        ArtworkDescriptor(artwork, currentIndex, Modifier.widthIn(max = 480.dp))
+        DisplayController(previous, next, Modifier.widthIn(max = 480.dp))
     }
 }
 
