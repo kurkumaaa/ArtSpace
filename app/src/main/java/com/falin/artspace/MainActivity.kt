@@ -65,14 +65,38 @@ fun ArtSpaceScreen(modifier: Modifier = Modifier) {
     val artwork = artworks[currentIndex]
     val previous = { currentIndex = (currentIndex + artworks.size - 1) % artworks.size }
     val next = { currentIndex = (currentIndex + 1) % artworks.size }
-    Column(
-        modifier = modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(24.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(24.dp, Alignment.CenterVertically)
-    ) {
-        ArtworkWall(artwork, Modifier.widthIn(max = 480.dp).fillMaxWidth(), 360.dp)
-        ArtworkDescriptor(artwork, currentIndex, Modifier.widthIn(max = 480.dp))
-        DisplayController(previous, next, Modifier.widthIn(max = 480.dp))
+
+    BoxWithConstraints(modifier = modifier.fillMaxSize()) {
+        val wideLayout = maxWidth >= 600.dp && maxWidth > maxHeight
+        val imageHeight = if (wideLayout) (maxHeight - 80.dp).coerceIn(160.dp, 480.dp)
+            else (maxHeight * 0.52f).coerceIn(180.dp, 480.dp)
+
+        if (wideLayout) {
+            Row(
+                modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(32.dp),
+                horizontalArrangement = Arrangement.spacedBy(32.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                ArtworkWall(artwork, Modifier.weight(1f), imageHeight)
+                Column(
+                    modifier = Modifier.weight(1f).widthIn(max = 420.dp),
+                    verticalArrangement = Arrangement.spacedBy(24.dp)
+                ) {
+                    ArtworkDescriptor(artwork, currentIndex)
+                    DisplayController(previous, next)
+                }
+            }
+        } else {
+            Column(
+                modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(24.dp, Alignment.CenterVertically)
+            ) {
+                ArtworkWall(artwork, Modifier.widthIn(max = 480.dp).fillMaxWidth(), imageHeight)
+                ArtworkDescriptor(artwork, currentIndex, Modifier.widthIn(max = 480.dp))
+                DisplayController(previous, next, Modifier.widthIn(max = 480.dp))
+            }
+        }
     }
 }
 
